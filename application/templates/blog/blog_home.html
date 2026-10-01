@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block body_content %}
+<div class="blog-home-title mt-4 mb-2">
+    <p class="workout-video-title">R.I.S.E. Fitness Blog</p>
+</div>
+
+<div class="container pt-2 pb-1 mt-0 mb-0">
+    <!-- Page intro -->
+    <div class="text-center mt-0 mb-3">
+        <p class="lead mx-auto" style="max-width: 800px;">
+            Your go-to hub for all things health, wellness, and motivation. From clean eating and mindset shifts to killer workouts and self-growth, find everything you need to RISE – physically, mentally, and emotionally.
+        </p>
+    </div>
+
+   <!-- Category filter -->
+<div class="row justify-content-center mb-4">
+    <div class="col-md-8">
+        <form method="GET" action="{{ url_for('blogs') }}">
+            <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
+                <!-- Category dropdown -->
+                <select name="category" class="form-select w-auto" aria-label="Select category">
+                    <option value="" disabled selected hidden>🏋️‍♀️ Filter by Category</option>
+                    <option value="Workout Routines">🏋️‍♂️ Workout Routines</option>
+                    <option value="Nutrition">🥗 Nutrition</option>
+                    <option value="Mindset & Motivation">🧠 Mindset & Motivation</option>
+                    <option value="Weight Loss">⚖️ Weight Loss</option>
+                    <option value="Fitness for Beginners">👟 Fitness for Beginners</option>
+                    <option value="Recovery & Injury Prevention">💪 Recovery & Injury Prevention</option>
+                    <option value="Health & Wellness">🌿 Health & Wellness</option>
+                    <option value="Fitness Challenges">🏆 Fitness Challenges</option>
+                </select>
+
+                <!-- Submit button -->
+                <button type="submit" class="cta-button">Filter Blogs</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Adjusted section divider spacing -->
+<div class="section-divider my-2 mt-0 mb-5"></div>
+
+    <!-- Blog cards -->
+<!--    <h2 class="text-center mb-4">Explore Our Latest Posts</h2>-->
+    <div class="row g-4">
+        {% for blog in blog_list %}
+        <div class="col-md-4">
+            <a href="{{ url_for('view_blog', blog_id=blog['blog_id']) }}" class="text-decoration-none text-dark">
+                <div class="card h-100 shadow border-0 blog-card">
+                    <img src="{{ url_for('static', filename=blog['image']) }}" class="card-img-top" style="height: 250px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-center fw-semibold">{{ blog['title'] }}</h5>
+                        <p class="card-text small text-muted">{{ blog['summary'] }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Subscribe section -->
+    <div class="rounded p-5 mt-5 text-center shadow-sm" style="background-color: #ffe3dd;">
+        <h4 class="fw-bold mb-3">Stay Inspired with Exclusive Updates!</h4>
+        <p class="text-muted mb-4">Join the R.I.S.E. community to receive motivation, tips, and blog updates directly in your inbox.</p>
+        <form action="{{ url_for('subscribe') }}" method="POST" class="d-flex justify-content-center flex-wrap gap-3">
+            <input type="email" name="email" class="form-control w-50" placeholder="Enter your email" required>
+            <button type="submit" class="cta-button">Subscribe</button>
+        </form>
+    </div>
+
+    <!-- Motivational footer quote -->
+    <div class="text-center mt-5">
+        <p class="fw-semibold fst-italic">Keep showing up. Keep rising. Stronger every day. 💪🏾</p>
+    </div>
+</div>
+{% endblock %}

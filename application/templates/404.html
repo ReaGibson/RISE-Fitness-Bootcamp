@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body_content %}
+<!--min-height makes it take the full height of the screen-->
+<div class="d-flex flex-column" style="min-height: 100vh;">
+
+  <!-- main content area with padding -->
+  <div class="container mt-5 mb-4">
+    <div class="error-title">
+        <p>Page Not Found</p>
+    </div>
+    <p>There was a problem with your request.</p>
+    <p><a href="{{ url_for('home') }}">Back to home page</a></p>
+  </div>
+
+    <div class="mt-4">
+    <img src="{{ url_for('static', filename='images/error/error.png') }}"
+         class="img-fluid"
+         style="max-width: 300px;">
+    </div>
+
+</div>
+{% endblock %}

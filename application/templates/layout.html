@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/main_styles.css">
+
+    <title>R.I.S.E. Fitness</title>
+</head>
+
+<body class="{{body_class | default('') }}">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark py-3">
+      <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
+
+        <!-- Logo (left) -->
+        <a class="navbar-brand" href="/">
+          <img src="/static/images/home_img/logo_v7.png" alt="R.I.S.E. Fitness Logo">
+        </a>
+
+        <!-- Nav Links (centered on desktop, hidden on mobile) -->
+        <div class="collapse navbar-collapse justify-content-center" id="mainNav">
+          <ul class="navbar-nav ms-auto me-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/workouts">Workout Videos</a></li>
+            <li class="nav-item"><a class="nav-link" href="/blog_home">R.I.S.E. Fitness Blog</a></li>
+             {% if not session.loggedIn %}
+            <li class="nav-item"><a class="nav-link" href="/membership">Become a Member</a></li>
+             {% endif %}
+          </ul>
+        </div>
+
+        <!-- Right: Burger menu icon (mobile only) + Sign in/Profile (always visible) -->
+        <div class="d-flex align-items-center ms-auto">
+
+          <!-- Burger Menu Button (only visible below md) -->
+          <button class="navbar-toggler d-md-none me-2" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Sign in / Profile dropdown (always visible) -->
+          <div class="dropdown">
+            {% if session.loggedIn %}
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+               id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+             <img src="{{ url_for('static', filename=session['profile_pic']) if session.get('profile_pic') else url_for('static', filename='images/profile_img/default_profile.png') }}" alt="User" width="32" height="32" class="rounded-circle me-2">
+              <div class="user-labels text-start d-none d-sm-block">
+                <div class="user-name">Hi, {{ session.user }}!</div>
+              </div>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownUser">
+              <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+              <li><a class="dropdown-item" href="/my_workouts">Workouts</a></li>
+              <li><a class="dropdown-item" href="/meal_plan_dashboard">Meal Plans</a></li>
+              <li><a class="dropdown-item" href="/profile">Profile</a></li>
+              <li><a class="dropdown-item" href="/profile/settings">Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/loggedout">Sign Out</a></li>
+            </ul>
+            {% else %}
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+               id="dropdownGuest" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle fs-4"></i>
+              <span class="ms-2 d-none d-sm-block"><div>Sign In</div></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end text-small text-center mx-auto" aria-labelledby="dropdownGuest">
+              <li class="px-3 py-2 small text-white" style="min-width: 200px;">
+                Join for free to get personalised workouts and meal plans and everything you need to stay on track — all in one place!
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li class="px-3 py-1"><a href="/signup" class="btn btn-join-filled w-100">Join</a></li>
+              <li class="px-3 pb-2"><a href="/signin" class="btn btn-sign-in w-100">Sign In</a></li>
+            </ul>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="container mt-4">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+
+    {% block body_content %}{% endblock %}
+
+    <footer class="footer sticky-bottom d-flex flex-wrap justify-content-center align-items-center py-3 mt-auto bg-dark footer accent">
+            <div class="col-md-4 d-flex align-items-center">
+              <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+              </a>
+              <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2025 R.I.S.E. Fitness</span>
+            </div>
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                <li><a href="#" class="ms-3 text-body-secondary"><i class="bi bi-twitter"></i></a></li>
+                <li><a href="#" class="ms-3 text-body-secondary"><i class="bi bi-instagram"></i></a></li>
+                <li><a href="#" class="ms-3 text-body-secondary"><i class="bi bi-facebook"></i></a></li>
+            </ul>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    Chart.register({
+        id: 'centerText',
+        beforeDraw(chart) {
+            const { width, height, ctx } = chart;
+            ctx.restore();
+            const fontSize = (height / 150).toFixed(2);
+            ctx.font = `${fontSize}em sans-serif`;
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = '#000';
+            const text = chart.config.options.plugins.centerText?.text || '';
+            const textX = Math.round((width - ctx.measureText(text).width) / 2);
+            const textY = height / 2;
+            ctx.fillText(text, textX, textY);
+            ctx.save();
+        }
+    });
+</script>
+</body>
+</html>

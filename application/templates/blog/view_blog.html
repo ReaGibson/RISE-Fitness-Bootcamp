@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block body_content %}
+<!-- Container for the individual blog post -->
+<div class="container mt-5">
+
+    <!-- Blog Title Section -->
+    <div class="container mt-5">
+    <div class="blog-home-title">
+        <p>{{ blog.title }}</p>
+    </div>
+
+    <!-- Author Information -->
+    <div class="d-flex justify-content-center mt-4 gap-3">
+        <p class="mb-0">Written by: {{ blog.author_name }}</p>
+        <p class="mb-0">Date: {{ blog.created_at }}</p>
+    </div>
+
+
+    <!-- Blog Image -->
+    <div class="text-center mb-4">
+        <img src="{{ url_for('static', filename=blog.image) }}" class="img-fluid" alt="{{ blog.title }}" style="max-height: 500px; object-fit: cover;">
+    </div>
+
+
+    <!-- Blog Summary -->
+    <p class="lead text-justify">{{ blog.summary }}</p>
+
+
+    <!-- Blog Content -->
+    <div class="blog-content" style="text-align:justify;">
+        <!-- Loop through each paragraph and display it in its own paragraph -->
+        {% for paragraph in blog.content.split('\n') %}
+            <p>{{ paragraph }}</p>
+        {% endfor %}
+    </div>
+
+
+    <!-- Back to Blogs Button -->
+    <div class="text-center mt-4">
+        <a href="{{ url_for('blogs') }}" class="cta-button">Back to All Blogs</a>
+    </div>
+</div>
+</div>
+
+<div class="mb-5"></div>
+{% endblock %}

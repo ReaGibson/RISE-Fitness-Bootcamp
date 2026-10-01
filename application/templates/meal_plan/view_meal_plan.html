@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block body_content %}
+
+<!-- Meal Plan Title (name of the plan) -->
+<div class="container mt-5">
+    <div class="blog-home-title">
+        <p>Meal Plan for the week starting: {{ selected_meal_plan.name }}</p>
+    </div>
+
+    <!-- Meals Data Debugging -->
+    <!-- <p>Meals Data: {{ selected_meal_plan.meals | tojson }}</p> -->
+
+    <!-- Start of the row for meal plans -->
+    <div class="row">
+        <!-- Loop through the days in the correct order: Monday to Sunday -->
+        {% for day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
+        {% set meals = selected_meal_plan.meals[day] %}
+
+        <!-- Display each day's meal plan -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100"> <!-- Ensures the card is the same height -->
+                <div class="card-header text-center">
+                    <h4>{{ day }}</h4>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <ul class="list-unstyled">
+                        <li><strong>Breakfast:</strong> {{ meals.breakfast }}</li>
+                        <li><strong>Lunch:</strong> {{ meals.lunch }}</li>
+                        <li><strong>Dinner:</strong> {{ meals.dinner }}</li>
+                        <li><strong>Snacks:</strong> {{ meals.snacks }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ensure each row has 3 columns per row on medium screens -->
+        {% if loop.index % 3 == 0 %}
+            </div><div class="row"> <!-- Start a new row after every 3 cards -->
+        {% endif %}
+        {% endfor %}
+    </div>
+
+<!-- Bottom Back Button -->
+<div class="container mt-4 pb-5">
+    <a href="{{ url_for('meal_plan_dashboard', timestamp=selected_meal_plan.created_at) }}" class="cta-button">
+        ← Back to Dashboard
+    </a>
+</div>
+
+</div> <!-- closes the container -->
+{% endblock %}
