@@ -1,55 +1,70 @@
 # 🏋️‍♀️ R.I.S.E. Fitness
 
-This is a Flask web application that provides a personalized dashboard for users to track meals, workouts, progress, and read motivational content.
+**Own your journey.** One place for the workout, the meal plan, and the reason you showed up today.
 
-## 💡 What This Project Does
+R.I.S.E. Fitness is a personal health dashboard. Sign up, set a goal, and the app keeps the week in front of you: meals you actually plan to eat, workouts matched to your level and the time you have, progress you can see, and a wellness blog for the days motivation is thin.
 
-This is a personal health and fitness web application where users can:
+It is built for consistency, not extremes. Fifteen minutes counts. A saved meal plan counts. Checking off Tuesday counts.
 
-- Log in securely with an email and password
-- Upload their details and fitness goals
-- Select and read articles from the Wellness Blog
-- Watch workouts tailored to their fitness goals and mark them as completed
-- Log their desired Meal Plan for the week
-- View a dashboard with:
-  - 🥗 Their saved Meal plan for the week
-  - 🏋️ Custom Workout plans 
-  - 📈 Weekly progress tracking (workouts done)
-  - 📰 Blog articles or helpful tips
+## What a week looks like
 
-It’s designed to motivate users and help them track their health journey—all in one place.
+1. **Join.** Create an account and tell the app who you are: height, weight, fitness goal, experience, and how you like to eat.
+2. **Train.** Browse workout videos filtered to your goal, level, and available time — 15 minutes, 30 minutes, or longer. Mark a session done when you finish it.
+3. **Eat.** Build a meal plan for the week, then come back to view, edit, or clone it when next week looks a lot like this one.
+4. **Read.** Open the wellness blog for nutrition, mindset, and the occasional reminder that progress is slower than a highlight reel.
+5. **Check the dashboard.** Today’s meal, today’s workout, recent articles, and how much of the week you have already completed — all on one screen.
 
-## 🎯 Purpose of the Project
+## What you can do
 
-This project was built to practice and showcase full-stack development skills, particularly:
+| | |
+|---|---|
+| 🔐 **Account** | Sign up, sign in, reset your password, or delete your account. |
+| 👤 **Profile** | Save goals, experience, diet, measurements, date of birth, and a profile photo. |
+| 📊 **Dashboard** | See today’s meal, today’s workout, weekly progress, and the latest blog posts. |
+| 🏃 **Workouts** | Watch sessions matched to your goal and mark them complete. |
+| 🥗 **Meal plans** | Log a week of meals, then view, edit, or clone a plan. |
+| 📖 **Blog** | Read fitness and wellness articles, and subscribe for updates. |
 
-- Building a multi-page Flask web app
-- Using MySQL as a relational database
-- Organizing code into routes, data_access, and templates
-- Applying Jinja2 for dynamic rendering
-- Designing a user-friendly interface with Bootstrap and custom CSS
+## Built with
 
-## 🧠 Why This Project is Useful
-- Combines fitness, nutrition, and self-improvement in a single dashboard
-- Encourages users to stay on track with their health goals
-- Demonstrates how to build a full-featured web app using Flask, with real-world features like authentication, database integration, and clean UI components
-
-## 🧱 Main Features
-
-| Feature                    | Description                                                                 |
-|----------------------------|-----------------------------------------------------------------------------|
-| 🔐 **User Login**          | Users can securely log in and access their dashboard                        |
-| 📊 **Dashboard**           | Central hub with all personal content                                       |
-| 📖 **Blog/Articles**       | Helpful fitness and nutrition-related content                               |
-| 🥦 **Daily meals dashboard**           | Gives opportunity to log their weekly meal plan to inspire healthy eating   |
-| 🏃 **Workout recommendations**       | Daily or weekly routines for different fitness levels and goals             |
-
-
-## 🛠️ Technologies Used
+A multi-page [Flask](https://flask.palletsprojects.com/) app: routes, a data-access layer, and [Jinja2](https://jinja.palletsprojects.com/) templates, with [MySQL](https://www.mysql.com/) underneath and Bootstrap plus custom CSS on the page.
 
 - Python 3.12
 - Flask
-- Jinja2 Templates
+- Jinja2
 - MySQL
-- HTML/CSS (Bootstrap)
-- JavaScript
+- HTML, CSS (Bootstrap), and JavaScript
+
+## Run it locally
+
+You need **Python 3.12** and a running **MySQL** server. The app connects as `root` on `localhost` to a database named `rise_db`. On macOS and Linux the password is empty. On Windows it is `password`.
+
+From the project folder:
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+On Windows, activate the virtual environment with `.venv\Scripts\activate` instead of `source`.
+
+Load the schema and sample content. This script drops `rise_db` if it already exists, then recreates it:
+
+```bash
+mysql -u root < application/rise_db.sql
+```
+
+On Windows, add the password:
+
+```bash
+mysql -u root -ppassword < application/rise_db.sql
+```
+
+Start the app:
+
+```bash
+python app.py
+```
+
+Open [http://127.0.0.1:5001](http://127.0.0.1:5001), create an account, and set your profile. The dashboard fills in from there.
